@@ -1,6 +1,6 @@
 <div class="container">
   <div *ngFor="let row of leds" class="row">
-    <div *ngFor="let cell of row" class="col-md-2 led-cell" (click)="switchLed(cell)" [class.off]="cell.value == false" [class.on]="cell.value == true"></div>
+    <div *ngFor="let cell of row" class="col-md-2 led-cell" [style.background]="cell.color" (click)="switchLed(cell)"></div>
   </div>
 
 </div>

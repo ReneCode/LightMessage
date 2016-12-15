@@ -1,16 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+import { LedControlService } from '../led-control.service'
 
 @Component({
   selector: 'app-led-grid',
   templateUrl: './led-grid.component.html',
-  styleUrls: ['./led-grid.component.sass']
+  styleUrls: ['./led-grid.component.scss']
+//  providers: [LedControlService]
 })
 export class LedGridComponent implements OnInit {
 
   leds = [];
-  SIZE = 5;
+  SIZE = 4;
 
-  constructor() {
+  constructor(private ledControlService: LedControlService) {
+    let offColor = ledControlService.getOffColor();
     for (let i=0; i<this.SIZE; i++) {
       let row = [];
       for (let j=0; j<this.SIZE; j++) {
@@ -18,7 +21,8 @@ export class LedGridComponent implements OnInit {
         let cell = {
           x: i,
           y: j,
-          value: value
+          value: value,
+          color: offColor
         }
         row.push( cell );
       }
@@ -30,7 +34,12 @@ export class LedGridComponent implements OnInit {
   }
 
   switchLed(cell) {
-    cell.value = !cell.value;
+    let newColor = this.ledControlService.getColor();
+    if (cell.color == newColor) {
+      cell.color = '#000'
+    } else {
+      cell.color = newColor;
+    }
   }
 
 }

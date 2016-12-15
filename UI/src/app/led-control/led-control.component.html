@@ -1,6 +1,5 @@
 <div class="container">
-  <div *ngFor="let color of colors" class="color" (click)="pickColor(color)">
-    {{color}}
+  <div *ngFor="let color of colors" class="color" [class.active]="color.active===true" [style.background]="color.value" (click)="pickColor(color)">
   </div>
 
 </div>

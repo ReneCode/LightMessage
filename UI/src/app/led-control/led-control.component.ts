@@ -13,7 +13,7 @@ export class LedControlComponent implements OnInit {
   constructor(private ledControlService: LedControlService) {
     let activeColor = ledControlService.getColor();
     this.colors = ledControlService.getAvailiableColors().map( function(c) {
-      return { value: c, active: activeColor == c}
+      return { value: c, active: activeColor === c}
     });
   }
 

@@ -8,6 +8,7 @@ import { LedGridComponent } from './led-grid/led-grid.component';
 import { LedCellComponent } from './led-cell/led-cell.component';
 import { LedControlComponent } from './led-control/led-control.component';
 import { LedControlService } from './led-control.service';
+import { LightMessageService } from './light-message.service'
 
 @NgModule({
   declarations: [
@@ -21,7 +22,10 @@ import { LedControlService } from './led-control.service';
     FormsModule,
     HttpModule
   ],
-  providers: [LedControlService],
+  providers: [
+    LedControlService,
+    LightMessageService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

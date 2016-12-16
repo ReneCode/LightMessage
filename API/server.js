@@ -1,7 +1,10 @@
 var express = require('express');
+var http = require('http');
+
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
+var cors = require('cors');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose')
@@ -13,6 +16,8 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+
+app.use(cors());
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -37,14 +42,15 @@ passport.serializeUser(Account.serializeUser())
 passport.deserializeUser(Account.deserializeUser())
 
 // mongoose
-mongoose.connect('mongodb://localhost:27017') // add password
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost:27017/riffer') // add password
 
 
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
-app.use('/lights', require('./routes/light'));
+app.use('/lights', require('./routes/lights'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -64,4 +70,18 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+
+
+
+
+var server = http.createServer(app);
+
+
+server.on('close', function() {
+  console.log("server closing")
+  mongoose.models = [];
+  mongoose.connection.close();
+})
+
+
+module.exports = server;

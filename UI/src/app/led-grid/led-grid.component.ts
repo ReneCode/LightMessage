@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LedControlService } from '../led-control.service'
+import { LightMessageService } from '../light-message.service'
 
 @Component({
   selector: 'app-led-grid',
@@ -12,16 +13,15 @@ export class LedGridComponent implements OnInit {
   leds = [];
   SIZE = 4;
 
-  constructor(private ledControlService: LedControlService) {
+  constructor(private ledControlService: LedControlService,
+              private lightMessageService: LightMessageService) {
     let offColor = ledControlService.getOffColor();
     for (let i=0; i<this.SIZE; i++) {
       let row = [];
       for (let j=0; j<this.SIZE; j++) {
-        let value = Math.random() > 0.5 ? false : true;
         let cell = {
           x: i,
           y: j,
-          value: value,
           color: offColor
         }
         row.push( cell );
@@ -41,5 +41,12 @@ export class LedGridComponent implements OnInit {
       cell.color = newColor;
     }
   }
+
+  save() {
+    this.lightMessageService.save(this.leds, function() {
+      console.log("saved")
+    });
+  }
+
 
 }

@@ -22,7 +22,7 @@ router.post('/', function(req, res, next) {
 		if (err) {
 			res.send(err);
 		} else {
-			res.send(data);
+			res.status(201).send('/lights/' + data._id);
 		}
 	})
 })

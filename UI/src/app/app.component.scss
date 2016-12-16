@@ -1,0 +1,12 @@
+
+.container {
+	display: -webkit-flex;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.item {
+	border: 0.1px gray solid;
+	
+}

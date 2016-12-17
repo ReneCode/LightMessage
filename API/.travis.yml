@@ -3,6 +3,9 @@ node_js:
 	- "6.11"
 
 before_script:
+	- cd API
 	- npm install
 
 script:
+	- npm test
+

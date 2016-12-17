@@ -31,6 +31,9 @@ export class LedGridComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.lightMessageService.load( (data) => {
+      this.leds = data[data.length-1].sequence;
+    })
   }
 
   switchLed(cell) {

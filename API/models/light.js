@@ -6,6 +6,8 @@ let Schema = mongoose.Schema
 
 var LightSchema = new Schema( {
 	username: String,
+	name: String,
+	data: { type: Date, default: Date.now },
 	sequence: Object
 })
 

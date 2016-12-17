@@ -5,7 +5,7 @@ import { DebugElement } from '@angular/core';
 
 import { LedControlComponent } from './led-control.component';
 
-describe('LedControlComponent', () => {
+xdescribe('LedControlComponent', () => {
   let component: LedControlComponent;
   let fixture: ComponentFixture<LedControlComponent>;
 

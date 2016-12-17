@@ -21,11 +21,14 @@ export class LightMessageService {
    }
 
   save(lightGrid, callback) { 
-    let body = JSON.stringify(lightGrid);
     let options = { headers: this.headers}
-    this.http.post(this.url, body, options)
+    let data = {
+      username: 'rene',
+      sequence: lightGrid
+    }
+    this.http.post(this.url, data, options)
       .subscribe( 
-        (res:Response) => res.json(), 
+        (res:Response) => console.log(res), 
         (err) => this.handleError(err) );
 
     

@@ -68,4 +68,32 @@ describe('REST interface light', function() {
 		})
 	})
 
+	// PUT
+	it ('should return 404 on bad id on PUT', function(done) {
+		let url = URL + '/abc';
+		superagent.put(url, {}, function(err, res) {
+			assert.equal(res.statusCode, 404)		
+			done();
+		})
+	})
+
+	it ('should update light PUT', function(done) {
+		let l1 = {username:"44", sequence: { a:43, b:"xyz"} };
+		let light = new Light( l1 );
+		light.save();
+		let id = light._id;
+		let url = URL + '/' + id;
+		let l2 = {username:"333", sequence: { a:66, c:'hallo'} };
+		superagent.put(url)
+		.send(l2)
+		.end(function(err, res) {
+			assert.equal(res.statusCode, 200)	
+			Light.findById(id, (err, data) => {
+				assert.deepEqual(data.username, l2.username)
+				assert.deepEqual(data.sequence, l2.sequence)
+				done();
+			})
+		})
+	})
 })
+

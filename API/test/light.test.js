@@ -100,7 +100,6 @@ describe('REST interface light', function() {
 			})
 		});
 	})
-
 	
 
 	// POST

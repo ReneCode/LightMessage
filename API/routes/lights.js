@@ -22,6 +22,16 @@ router.get('/', (req, res) => {
 	})
 });
 
+router.get('/latest', (req, res) => {
+	Light.findOne({}).sort({date:-1}).exec( (err, data) => {
+		if (err) {
+			res.send(err);
+		} else {
+			res.send(data);
+		}		
+	})
+})
+
 router.post('/', (req, res) => {
 	let light = Light.create(validateBodyData(req), function(err, data) {
 		if (err) {

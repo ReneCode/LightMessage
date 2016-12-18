@@ -47,6 +47,28 @@ describe('REST interface light', function() {
 		})
 	})
 
+	it ('should get one latest data from GET', function(done) {
+		let l1 = {username:"11", sequence: { a:11, b:"xyz"}, date:new Date(2010, 5, 2, 11, 44)  };
+		let light1 = new Light( l1 );
+		light1.save();
+		let l2 = {username:"22", sequence: { a:22, b:"abc"}, date:new Date(2010, 5, 2, 11, 45)  };
+		let light2 = new Light( l2 );
+		light2.save();
+		let l3 = {username:"33", sequence: { a:33, b:"abc"}, date:new Date(2010, 5, 2, 11, 24)  };
+		let light3 = new Light( l3 );
+		light3.save();
+		let url = URL + '/latest'
+		superagent.get(url, function(err, res) {
+			assert.isNotNull(res.body)
+			let data = res.body;
+			assert.equal(data.username, l2.username)
+			assert.deepEqual(data.sequence, l2.sequence)
+			done();
+		})
+	})
+
+	
+
 	// POST
 	it ('should provide POST', function(done) {
 		superagent.post(URL, {}, function(err, res) {

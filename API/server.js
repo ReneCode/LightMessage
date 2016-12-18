@@ -43,7 +43,7 @@ passport.deserializeUser(Account.deserializeUser())
 
 // mongoose
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/riffer') // add password
+mongoose.connect('mongodb://localhost:27017/light') // add password
 
 
 app.use(express.static(path.join(__dirname, 'public')));

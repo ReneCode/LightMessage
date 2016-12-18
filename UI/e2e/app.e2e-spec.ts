@@ -1,10 +1,10 @@
-import { RifferPage } from './app.po';
+import { LightMessagePage } from './app.po';
 
 describe('riffer App', function() {
-  let page: RifferPage;
+  let page: LightMessagePage;
 
   beforeEach(() => {
-    page = new RifferPage();
+    page = new LightMessagePage();
   });
 
   it('should display message saying app works', () => {

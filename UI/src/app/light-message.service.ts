@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http'
 import { Observable } from 'rxjs/Observable'
 
-
+/*
 export class LightMessage {
-
+  _id: number,
+  name: string
 }
-
+*/
 
 @Injectable()
 export class LightMessageService {
@@ -22,6 +23,28 @@ export class LightMessageService {
     this.headers.append('Accept', 'application/json');
   }
 
+
+  loadLatest(callback) {
+    let options = { headers: this.headers}
+    let urlLatest = this.url + '/latest'
+    this.http.get(urlLatest, options)
+      .subscribe( 
+        (res:Response) =>  {
+          let result = null;
+          try {
+            result = res.json();
+          }
+          catch (e) {
+            result = null;
+          }
+          console.log("## loadLatest", result);
+          callback(result)
+
+        },
+        (err) => this.handleError(err) );
+  }
+  
+
   load(callback) {
     let options = { headers: this.headers}
     this.http.get(this.url, options)
@@ -35,17 +58,29 @@ export class LightMessageService {
         (err) => this.handleError(err) );
   }
 
-  save(lightGrid, callback) { 
+  save(lightMessage, callback) { 
+    console.log("##save:", lightMessage)
     let options = { headers: this.headers}
-    let data = {
-      username: this.currentUsername,
-      sequence: lightGrid
-    }
-    this.http.post(this.url, data, options)
-      .subscribe( 
-        (res:Response) => console.log(res), 
-        (err) => this.handleError(err) );
 
+    if (lightMessage._id) {
+      // update existing message
+      let urlPut = this.url + '/' + lightMessage._id; 
+      this.http.put(urlPut, lightMessage, options) 
+        .subscribe( 
+          (res:Response) => {
+            console.log(res)
+          }, 
+          (err) => this.handleError(err) );  
+      
+    } else {
+      // create new message
+      this.http.post(this.url, lightMessage, options)
+        .subscribe( 
+          (res:Response) => {
+            console.log(res)
+          }, 
+          (err) => this.handleError(err) );
+    }
     
   }
 

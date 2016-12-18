@@ -6,16 +6,32 @@ import { LightMessageService } from '../light-message.service'
   selector: 'app-led-grid',
   templateUrl: './led-grid.component.html',
   styleUrls: ['./led-grid.component.scss']
-//  providers: [LedControlService]
 })
 export class LedGridComponent implements OnInit {
 
   leds = [];
+
+  lightMessage = {
+    sequence: {
+      leds:[] 
+    }
+  };
   SIZE = 4;
 
   constructor(private ledControlService: LedControlService,
               private lightMessageService: LightMessageService) {
-    let offColor = ledControlService.getOffColor();
+  }
+
+
+  showLeds() {
+    if (!this.validLightMessage(this.lightMessage)) {
+      this.clearLeds()
+    }
+  }
+
+  clearLeds() {
+    let offColor = this.ledControlService.getOffColor();
+    let leds = [];
     for (let i=0; i<this.SIZE; i++) {
       let row = [];
       for (let j=0; j<this.SIZE; j++) {
@@ -26,14 +42,48 @@ export class LedGridComponent implements OnInit {
         }
         row.push( cell );
       }
-      this.leds.push(row);
+      leds.push(row);
     }
+    this.lightMessage.sequence.leds = [ leds ];
+  }
+
+
+   validLightMessage(msg) {
+     if (!msg) {
+       return false;
+     }
+     if (!msg.sequence) {
+       return false;
+     }
+     if (!msg.sequence.leds) {
+       return false;
+     }
+     let leds = msg.sequence.leds;
+     if (!Array.isArray(leds)) {
+       return false;
+     }
+     if (!Array.isArray(leds[0])) {
+       return false;
+     }
+     return true;
    }
 
   ngOnInit() {
-    this.lightMessageService.load( (data) => {
-      this.leds = data[data.length-1].sequence;
+    this.lightMessageService.loadLatest( (msg) => {
+      console.log("## loaded", msg);
+      if (this.validLightMessage(msg)) {
+        this.lightMessage = msg;
+      } else {
+        this.clearLeds();
+        console.log('##invalid msg', this.lightMessage);
+      }
+      this.showLedFrame(0);
     })
+  }
+
+  showLedFrame(frameIndex) {
+    this.leds = this.lightMessage.sequence.leds[frameIndex];
+    console.log(this.leds)
   }
 
   switchLed(cell) {
@@ -46,7 +96,7 @@ export class LedGridComponent implements OnInit {
   }
 
   save() {
-    this.lightMessageService.save(this.leds, function() {
+    this.lightMessageService.save(this.lightMessage, function() {
       console.log("saved")
     });
   }

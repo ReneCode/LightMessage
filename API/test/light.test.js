@@ -26,6 +26,47 @@ describe('REST interface light', function() {
 		})
 	})
 
+	function getTestData() {
+		let l1 = {
+			username:"11", 
+			date:new Date(2010, 5, 2, 11, 44),
+			sequence: {
+				leds: [ { a:11, b:"abc"} ]
+			}
+		};
+		let l2 = {
+			username:"22", 
+			date:new Date(2010, 5, 2, 11, 46),
+			sequence: {
+				leds: [ 
+					{ a:22, b:"xyt", c:true},
+					{ a:22, b:"xyz"} 
+				],
+				speed: 500
+			}
+		};
+		let l3 = {
+			username:"33", 
+			date:new Date(2010, 5, 2, 11, 33),
+			sequence: {
+				leds: [ { a:33, b:"end"} ]
+			}
+		};
+
+		return [ l1, l2, l3 ];
+	}
+
+	function createTestData() {
+		let data = getTestData();
+		let result = [];
+		data.forEach( d => {
+			let light = new Light( d )
+			light.save()
+			result.push(light)
+		})
+		return result
+	}
+
 	// GET
 	it ('should provide GET', function(done) {
 		superagent.get(URL, function(err, res) {
@@ -35,34 +76,24 @@ describe('REST interface light', function() {
 	})
 
 	it ('should get data from GET', function(done) {
-		let l1 = {username:"44", sequence: { a:43, b:"xyz"} };
-		let light = new Light( l1 );
-		light.save();
+		let data = getTestData();
+		createTestData();
 		superagent.get(URL, function(err, res) {
-			assert.equal(res.body.length, 1)
-			let data = res.body[0];
-			assert.equal(data.username, l1.username)
-			assert.deepEqual(data.sequence, l1.sequence)
+			assert.equal(res.body.length, data.length)
+			assert.deepEqual(data[0].sequence, res.body[0].sequence)
 			done();
 		})
 	})
 
 	it ('should get one latest data from GET', function(done) {
-		let l1 = {username:"11", sequence: { a:11, b:"xyz"}, date:new Date(2010, 5, 2, 11, 44)  };
-		let light1 = new Light( l1 );
-		light1.save();
-		let l2 = {username:"22", sequence: { a:22, b:"abc"}, date:new Date(2010, 5, 2, 11, 45)  };
-		let light2 = new Light( l2 );
-		light2.save();
-		let l3 = {username:"33", sequence: { a:33, b:"abc"}, date:new Date(2010, 5, 2, 11, 24)  };
-		let light3 = new Light( l3 );
-		light3.save();
+		let data = getTestData();
+		// data[1] has the newest data
+		createTestData();
 		let url = URL + '/latest'
 		superagent.get(url, function(err, res) {
 			assert.isNotNull(res.body)
-			let data = res.body;
-			assert.equal(data.username, l2.username)
-			assert.deepEqual(data.sequence, l2.sequence)
+			assert.equal(res.body.username, data[1].username)
+			assert.deepEqual(res.body.sequence, data[1].sequence)
 			done();
 		})
 	})
@@ -78,10 +109,10 @@ describe('REST interface light', function() {
 	})
 
 	it ('should return status 201 from POST', function(done) {
-		let l1 = {username:"abc", sequence: { a:42, b:"post-data"} };
+		let data = getTestData();
 		superagent.post(URL)
 		.set('Content-Type', 'application/json')
-		.send(l1)
+		.send(data[0])
 		.end(function(err, res) {
 			assert.equal(201, res.statusCode)	
 			assert.include(res.text, '/lights/');
@@ -98,12 +129,10 @@ describe('REST interface light', function() {
 			done();
 		})
 	})
-
+			
 	it ('should update light PUT', function(done) {
-		let l1 = {username:"44", sequence: { a:43, b:"xyz"} };
-		let light = new Light( l1 );
-		light.save();
-		let id = light._id;
+		let data = createTestData();
+		let id = data[0]._id;
 		let url = URL + '/' + id;
 		let l2 = {username:"333", sequence: { a:66, c:'hallo'} };
 		superagent.put(url)

@@ -1,6 +1,6 @@
 import { browser, element, by } from 'protractor';
 
-export class RifferPage {
+export class LightMessagePage {
   navigateTo() {
     return browser.get('/');
   }

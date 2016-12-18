@@ -37,9 +37,7 @@ export class LightMessageService {
           catch (e) {
             result = null;
           }
-          console.log("## loadLatest", result);
           callback(result)
-
         },
         (err) => this.handleError(err) );
   }
@@ -53,22 +51,19 @@ export class LightMessageService {
           let result = res.json();
           console.log(result);
           callback(result)
-
         },
         (err) => this.handleError(err) );
   }
 
   save(lightMessage, callback) { 
-    console.log("##save:", lightMessage)
     let options = { headers: this.headers}
-
     if (lightMessage._id) {
       // update existing message
       let urlPut = this.url + '/' + lightMessage._id; 
       this.http.put(urlPut, lightMessage, options) 
         .subscribe( 
           (res:Response) => {
-            console.log(res)
+            callback(lightMessage._id)
           }, 
           (err) => this.handleError(err) );  
       
@@ -77,7 +72,15 @@ export class LightMessageService {
       this.http.post(this.url, lightMessage, options)
         .subscribe( 
           (res:Response) => {
-            console.log(res)
+            // extract the id (last part of the retuned created-url)
+            let rx = /\w+\/(.*)/;
+            let id = rx.exec(res.text());
+            console.log(id);
+            if (id.length >= 2) {
+              callback(id[1])
+            } else {
+              callback()
+            }
           }, 
           (err) => this.handleError(err) );
     }

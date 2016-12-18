@@ -70,12 +70,10 @@ export class LedGridComponent implements OnInit {
 
   ngOnInit() {
     this.lightMessageService.loadLatest( (msg) => {
-      console.log("## loaded", msg);
       if (this.validLightMessage(msg)) {
         this.lightMessage = msg;
       } else {
         this.clearLeds();
-        console.log('##invalid msg', this.lightMessage);
       }
       this.showLedFrame(0);
     })
@@ -96,8 +94,8 @@ export class LedGridComponent implements OnInit {
   }
 
   save() {
-    this.lightMessageService.save(this.lightMessage, function() {
-      console.log("saved")
+    this.lightMessageService.save(this.lightMessage, id => {
+      this.lightMessage["_id"] = id;
     });
   }
 

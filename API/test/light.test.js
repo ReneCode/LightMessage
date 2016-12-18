@@ -113,6 +113,7 @@ describe('REST interface light', function() {
 
 	it ('should return status 201 from POST', function(done) {
 		let data = getTestData()
+		let currentDate = Date.now();
 		superagent.post(URL)
 		.set('Content-Type', 'application/json')
 		.send(data[0])
@@ -120,7 +121,14 @@ describe('REST interface light', function() {
 			assert.equal(201, res.statusCode)	
 			assert.include(res.text, '/lights/');
 			assert.match(res.text, /\/lights\/[\w]+$/);
-			done();
+
+			// get created object
+			Light.findOne({}, (err, data) => {
+				// date should be set
+				assert.closeTo(data.date.getTime(), currentDate, 1000)
+				done();
+
+			})
 		})
 	})
 
@@ -137,7 +145,8 @@ describe('REST interface light', function() {
 		createTestData( data => {
 			let id = data[0]._id;
 			let url = URL + '/' + id;
-			let l2 = {username:"333", sequence: { a:66, c:'hallo'} };
+			let l2 = {username:"333", sequence: { a:66, c:'hallo'}, date: data[0].date };
+			let currentDate = Date.now();
 			superagent.put(url)
 			.send(l2)
 			.end(function(err, res) {
@@ -145,6 +154,7 @@ describe('REST interface light', function() {
 				Light.findById(id, (err, data) => {
 					assert.deepEqual(data.username, l2.username)
 					assert.deepEqual(data.sequence, l2.sequence)
+					assert.closeTo(data.date.getTime(), currentDate, 1000)
 					done();
 				})
 			})

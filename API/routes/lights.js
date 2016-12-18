@@ -4,10 +4,18 @@ var Light = require('../models/light')
 
 
 
+
+function setCurrentDate(lightMessage) {
+	lightMessage.date = Date.now();
+}
+
+
 function validateBodyData(req) {
 	return {
 		username: req.body.username,
-		sequence: req.body.sequence
+		sequence: req.body.sequence,
+		name: req.body.name,
+		date: req.body.date 
 	}
 }
 
@@ -33,7 +41,12 @@ router.get('/latest', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-	let light = Light.create(validateBodyData(req), function(err, data) {
+	let inData = validateBodyData(req);
+	if (inData == {}) {
+		return res.sendStatus(204)		// no content
+	}
+	setCurrentDate(inData);
+	let light = Light.create(inData, (err, data) => {
 		if (err) {
 			res.send(err);
 		} else {
@@ -49,8 +62,9 @@ router.put('/:id', (req, res) => {
 	}
 	let inData = validateBodyData(req);
 	if (inData == {}) {
-		return res.sendStatus(204)		// no centent
+		return res.sendStatus(204)		// no content
 	}
+	setCurrentDate(inData);
 	Light.findByIdAndUpdate(id, inData,(err, data) => {
 		if (err) {
 			return res.sendStatus(404) 			// id not found

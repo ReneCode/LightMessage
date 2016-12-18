@@ -56,15 +56,16 @@ describe('REST interface light', function() {
 		return [ l1, l2, l3 ];
 	}
 
-	function createTestData() {
+	function createTestData(callback) {
 		let data = getTestData();
-		let result = [];
-		data.forEach( d => {
-			let light = new Light( d )
-			light.save()
-			result.push(light)
+		Light.create( data, (err, data) => {
+			if (err) {
+				callback(null)
+			} else {
+				callback(data);
+			}
 		})
-		return result
+
 	}
 
 	// GET
@@ -77,25 +78,27 @@ describe('REST interface light', function() {
 
 	it ('should get data from GET', function(done) {
 		let data = getTestData();
-		createTestData();
-		superagent.get(URL, function(err, res) {
-			assert.equal(res.body.length, data.length)
-			assert.deepEqual(data[0].sequence, res.body[0].sequence)
-			done();
+		createTestData( result => {
+			superagent.get(URL, function(err, res) {
+				assert.equal(res.body.length, data.length)
+				assert.deepEqual(data[0].sequence, res.body[0].sequence)
+				done();
+			});
 		})
 	})
 
 	it ('should get one latest data from GET', function(done) {
 		let data = getTestData();
 		// data[1] has the newest data
-		createTestData();
-		let url = URL + '/latest'
-		superagent.get(url, function(err, res) {
-			assert.isNotNull(res.body)
-			assert.equal(res.body.username, data[1].username)
-			assert.deepEqual(res.body.sequence, data[1].sequence)
-			done();
-		})
+		createTestData( (result) => {
+			let url = URL + '/latest'
+			superagent.get(url, function(err, res) {
+				assert.isNotNull(res.body)
+				assert.equal(res.body.username, data[1].username)
+				assert.deepEqual(res.body.sequence, data[1].sequence)
+				done();
+			})
+		});
 	})
 
 	
@@ -109,7 +112,7 @@ describe('REST interface light', function() {
 	})
 
 	it ('should return status 201 from POST', function(done) {
-		let data = getTestData();
+		let data = getTestData()
 		superagent.post(URL)
 		.set('Content-Type', 'application/json')
 		.send(data[0])
@@ -124,27 +127,30 @@ describe('REST interface light', function() {
 	// PUT
 	it ('should return 404 on bad id on PUT', function(done) {
 		let url = URL + '/abc';
-		superagent.put(url, {}, function(err, res) {
+		superagent.put(url, {}, (err, res) => {
 			assert.equal(res.statusCode, 404)		
 			done();
 		})
 	})
-			
+
 	it ('should update light PUT', function(done) {
-		let data = createTestData();
-		let id = data[0]._id;
-		let url = URL + '/' + id;
-		let l2 = {username:"333", sequence: { a:66, c:'hallo'} };
-		superagent.put(url)
-		.send(l2)
-		.end(function(err, res) {
-			assert.equal(res.statusCode, 200)	
-			Light.findById(id, (err, data) => {
-				assert.deepEqual(data.username, l2.username)
-				assert.deepEqual(data.sequence, l2.sequence)
-				done();
+		createTestData( data => {
+			let id = data[0]._id;
+			let url = URL + '/' + id;
+			let l2 = {username:"333", sequence: { a:66, c:'hallo'} };
+			superagent.put(url)
+			.send(l2)
+			.end(function(err, res) {
+				assert.equal(res.statusCode, 200)	
+				Light.findById(id, (err, data) => {
+					assert.deepEqual(data.username, l2.username)
+					assert.deepEqual(data.sequence, l2.sequence)
+					done();
+				})
 			})
-		})
+
+		});
 	})
 })
+
 

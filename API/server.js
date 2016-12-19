@@ -34,16 +34,25 @@ app.use(require('express-session')( {
 app.use(passport.initialize())
 app.use(passport.session())
 
-
 // passport
 let Account = require('./models/account')
 passport.use(new LocalStragety(Account.authenticate()))
 passport.serializeUser(Account.serializeUser())
 passport.deserializeUser(Account.deserializeUser())
 
+
+
 // mongoose
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/light') // add password
+let mongodb_connect = process.env.MONGODB_CONNECT || 'mongodb://localhost:27017'
+let mongodb_database = process.env.MONGODB_DATABASE || 'lightmessage'
+let connection_string = mongodb_connect;
+if (connection_string.indexOf('?') >= 0) {
+  connection_string = connection_string.replace('?', mongodb_database + '?')
+} else {
+  connection_string = connection_string + '/' + mongodb_database
+} 
+mongoose.connect(connection_string) // add password
 
 
 app.use(express.static(path.join(__dirname, 'public')));

@@ -1,5 +1,4 @@
 
-cp ./toazure.sh ../..
 
 $ngEnvironment=prod
 

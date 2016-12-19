@@ -12,8 +12,4 @@ before_script:
 script:
   - npm test
 
-deploy:
-  provider: azure_web_apps
-  verbose: true
-
   

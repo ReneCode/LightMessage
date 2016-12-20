@@ -19,8 +19,8 @@ gitRepo="https://${gitUsername}:${gitPassword}@${gitRepo}"
 
 git clone $gitRepo $deployFolder
 
-#git config user.email "abc@travis.com"
-#git config user.name "travis deploy script"
+git config user.email "abc@abc.com"
+git config user.name "travis deploy script"
 
 cd $deployFolder
 # remove old files inside the repo

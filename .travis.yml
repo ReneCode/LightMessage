@@ -12,4 +12,10 @@ before_script:
 script:
   - npm test
 
+deploy:
+  provider: script
+  script: scripts/deploy.sh $GITUSER $GITPASSWORD
+  
+
+
   

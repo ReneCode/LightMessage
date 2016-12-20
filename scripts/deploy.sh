@@ -19,8 +19,8 @@ gitRepo="https://${gitUsername}:${gitPassword}@${gitRepo}"
 
 git clone $gitRepo $deployFolder
 
-git config user.email "abc@travis.com"
-git config user.name "travis deploy script"
+#git config user.email "abc@travis.com"
+#git config user.name "travis deploy script"
 
 
 
@@ -31,6 +31,8 @@ cp -r API/ $deployFolder
 cd $deployFolder
 git add .
 git commit -am"${gitCommitMessage}"
+git status
+
 git push
 cd ..
 

@@ -12,6 +12,10 @@ before_script:
 script:
   - npm test
 
+
+after_success:
+  - cd ..
+
 deploy:
   skip_cleanup: true
   provider: script

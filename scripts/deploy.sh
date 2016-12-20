@@ -23,6 +23,8 @@ pwd
 cp API/ $deployFolder
 pwd
 
+
+
 #cd lightmessageservice
 #git pull
 #rm -rf *

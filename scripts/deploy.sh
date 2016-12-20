@@ -27,9 +27,8 @@ cd $deployFolder
 rm -rf *
 
 # copy new files
-echo copy API
-ls -na ../API/
-cp -r ../API/ .
+cp -r ../API/. .
+pwd
 ls -na
 #git add .
 #git commit -am"${gitCommitMessage}"

@@ -15,10 +15,18 @@ echo === start lightmessageservice
 echo --- deploy lightmessageservice
 
 
-
 gitRepo="https://${gitUsername}:${gitPassword}@${gitRepo}"
 
 git clone $gitRepo $deployFolder
+
+git config user.email "abc@travis.com"
+git config user.name "travis deploy script"
+
+
+
+# remove old files
+rm -rf *
+# copy new files
 cp -r API/ $deployFolder
 cd $deployFolder
 git add .

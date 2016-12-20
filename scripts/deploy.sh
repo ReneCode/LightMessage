@@ -22,18 +22,20 @@ git clone $gitRepo $deployFolder
 #git config user.email "abc@travis.com"
 #git config user.name "travis deploy script"
 
-
-
-# remove old files
-rm -rf *
-# copy new files
-cp -r API/ $deployFolder
 cd $deployFolder
-git add .
-git commit -am"${gitCommitMessage}"
-git status
+# remove old files inside the repo
+rm -rf *
 
-git push
+# copy new files
+echo copy API
+ls -na ../API/
+cp -r ../API/ .
+ls -na
+#git add .
+#git commit -am"${gitCommitMessage}"
+#git status
+
+#git push
 cd ..
 
 

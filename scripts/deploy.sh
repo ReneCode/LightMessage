@@ -30,11 +30,11 @@ rm -rf *
 cp -r ../API/. .
 pwd
 ls -na
-#git add .
-#git commit -am"${gitCommitMessage}"
+git add .
+git commit -am"${gitCommitMessage}"
 #git status
 
-#git push
+git push
 cd ..
 
 

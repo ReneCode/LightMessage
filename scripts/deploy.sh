@@ -19,8 +19,10 @@ gitRepo="https://${gitUsername}:${gitPassword}@${gitRepo}"
 git clone $gitRepo $deployFolder
 
 pwd
-
+ls -na
 cp API/ $deployFolder
+git status
+
 pwd
 
 

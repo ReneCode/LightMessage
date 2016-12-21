@@ -10,13 +10,11 @@ script:
 
 before_deploy:
   - rm -rf node_modules
-  - rm -rf e2e
-  - rm -rf scripts
   - cp dist/* .
-  - rm -rf dist
 
 deploy:
   provider: azure_web_apps
+  verbose: true
   skip_cleanup: true
   overwrite: true
 

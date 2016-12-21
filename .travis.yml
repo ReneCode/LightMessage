@@ -11,9 +11,9 @@ script:
 before_deploy:
   - rm -rf src/
   - cp dist/* .
-  - ls
 
 deploy:
+  - skip_cleanup: true
   - provider: azure_web_apps
 
 

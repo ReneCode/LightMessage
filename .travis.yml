@@ -13,7 +13,7 @@ before_deploy:
   - cp dist/* .
 
 deploy:
-  - skip_cleanup: true
+  skip_cleanup: true
   - provider: azure_web_apps
 
 

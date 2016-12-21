@@ -7,15 +7,7 @@ before_script:
 
 script:
   - ng build --environment=${ngEnvironment}
-
-before_deploy:
-  - cp dist/* .
-
-deploy:
-  provider: azure_web_apps
-  verbose: true
-  skip_cleanup: true
-
+  - bash ./scripts/travis-deploy.sh
 
 
 

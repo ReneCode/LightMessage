@@ -1,5 +1,5 @@
 
-gitCommitMessage="travis"
+gitCommitMessage="travis CI"
 
 echo === start azure deploy
 

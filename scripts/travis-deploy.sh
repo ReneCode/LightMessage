@@ -6,8 +6,6 @@ echo === start azure deploy
 gitRepo="https://${AZURE_WA_USERNAME}:${AZURE_WA_PASSWORD}@${AZURE_WA_SITE}.scm.azurewebsites.net:443/${AZURE_WA_SITE}.git"
 
 git clone $gitRepo 
-
-echo a1
 cd ${AZURE_WA_SITE}
 # remove old files inside the repo
 rm -rf *

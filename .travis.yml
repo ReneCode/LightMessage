@@ -16,8 +16,9 @@ before_deploy:
   - rm -rf dist
 
 deploy:
-  skip_cleanup: true
   provider: azure_web_apps
+  skip_cleanup: true
+  overwrite: true
 
 
 

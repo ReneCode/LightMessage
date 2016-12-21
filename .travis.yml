@@ -6,19 +6,15 @@ before_script:
   - npm install angular-cli@1.0.0-beta.24
 
 script:
-  - ng build --environment=prod
-  - ls
+  - ng build --environment=${ngEnvironment}
 
 before_deploy:
-  - cd dist
-  - ls
+  - rm -rf src/
+  - cp dist/* .
 
 deploy:
   - provider: azure_web_apps
 
-after_deploy:
-  - cd ..
-  - ls
 
 
 

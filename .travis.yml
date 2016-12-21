@@ -8,7 +8,7 @@ before_script:
 
 script:
   - ng build --environment=prod
-  - cp build/. .
+  - cp dist/. .
 
 deploy:
   - provider: azure_web_apps

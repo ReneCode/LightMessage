@@ -10,13 +10,15 @@ script:
   - ls
 
 before_deploy:
-  - mv dist .dist
-  - rm -rf *
-  - cp .dist/. .
+  - cd dist
+  - ls
 
 deploy:
   - provider: azure_web_apps
 
+after_deploy:
+  - cd ..
+  - ls
 
 
 

@@ -9,14 +9,12 @@ script:
   - ng build --environment=${ngEnvironment}
 
 before_deploy:
-  - rm -rf node_modules
   - cp dist/* .
 
 deploy:
   provider: azure_web_apps
   verbose: true
   skip_cleanup: true
-  overwrite: true
 
 
 

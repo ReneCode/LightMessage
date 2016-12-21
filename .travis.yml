@@ -14,7 +14,7 @@ before_deploy:
 
 deploy:
   skip_cleanup: true
-  - provider: azure_web_apps
+  provider: azure_web_apps
 
 
 

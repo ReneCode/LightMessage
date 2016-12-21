@@ -1,5 +1,5 @@
-node_modules
-npm-debug.log
 .vscode
-deploy
+dist
+node_modules
+npm_debug.log
 

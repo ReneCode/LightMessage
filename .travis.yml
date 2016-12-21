@@ -2,27 +2,12 @@ language: node_js
 node_js:
   - "6"
 
-services:
-  - mongodb
-
 before_script:
-  - cd API
   - npm install
+  - npm install angular-cli
 
 script:
-  - npm test
-
-
-after_success:
-  - cd ..
-
-deploy:
-  skip_cleanup: true
-  provider: script
-  script: scripts/deploy.sh $GITUSER $GITPASSWORD
-  on:
-    branch: master
-
-
+  - ng build
+  
 
   

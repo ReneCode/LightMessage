@@ -9,8 +9,10 @@ script:
   - ng build --environment=${ngEnvironment}
 
 before_deploy:
-  - rm -rf src/
-  - cp dist/* .
+  - mv dist .dist
+  - rm -rf .
+  - cp .dist/* .
+  - rm -rf .dist
 
 deploy:
   skip_cleanup: true

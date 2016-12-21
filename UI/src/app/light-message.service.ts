@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http'
 import { Observable } from 'rxjs/Observable'
 
+import { environment } from '../environments/environment'
+
 /*
 export class LightMessage {
   _id: number,
@@ -12,7 +14,7 @@ export class LightMessage {
 @Injectable()
 export class LightMessageService {
 
-  private url = 'http://localhost:3000/lights';
+  private url = environment.api_server + '/lights';
   private headers: Headers;
   private currentUsername = "test-user";
 

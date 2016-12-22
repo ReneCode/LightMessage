@@ -7,44 +7,72 @@ import { LightMessageService } from '../light-message.service'
   templateUrl: './led-grid.component.html',
   styleUrls: ['./led-grid.component.scss']
 })
+
+
+
+
 export class LedGridComponent implements OnInit {
 
-  leds = [];
+  // leds = [];
+  xIndex = [];
+  yIndex = [];
+
+  SIZE = 4;
 
   lightMessage = {
-    sequence: {
-      leds:[] 
-    }
+    username: undefined,
+    _id: undefined,
+    name: 'msg-1',
+    currentFrame: 0,
+    size_x: this.SIZE,
+    size_y: this.SIZE,
+    frames: []
   };
-  SIZE = 4;
 
   constructor(private ledControlService: LedControlService,
               private lightMessageService: LightMessageService) {
-  }
-
-
-  showLeds() {
-    if (!this.validLightMessage(this.lightMessage)) {
-      this.clearLeds()
+    for (let i=0; i<this.SIZE; i++) {
+      this.xIndex.push(i);
+      this.yIndex.push(i);
     }
   }
 
-  clearLeds() {
+  ledIndex(x,y) {
+    return x + y*this.lightMessage.size_x;
+  }
+
+  getColor(x,y) {
+    let idx = this.ledIndex(x,y)
+    let idxFrame = this.lightMessage.currentFrame;
+    let frame = this.lightMessage.frames[idxFrame];
+    return frame.leds[idx];
+  }
+
+
+  setColor(x,y,color) {
+    let idx = this.ledIndex(x,y)
+    let idxFrame = this.lightMessage.currentFrame;
+    let frame = this.lightMessage.frames[idxFrame];
+    frame.leds[idx] = color;
+  }
+
+
+  newFrame() {
     let offColor = this.ledControlService.getOffColor();
     let leds = [];
     for (let i=0; i<this.SIZE; i++) {
-      let row = [];
       for (let j=0; j<this.SIZE; j++) {
-        let cell = {
-          x: i,
-          y: j,
-          color: offColor
-        }
-        row.push( cell );
+        leds.push( offColor );
       }
-      leds.push(row);
     }
-    this.lightMessage.sequence.leds = [ leds ];
+    return {
+      leds: leds
+    }
+  }
+
+  initMessage() {
+    this.lightMessage.frames = [ this.newFrame() ];
+    this.lightMessage.currentFrame = 0;
   }
 
 
@@ -52,45 +80,45 @@ export class LedGridComponent implements OnInit {
      if (!msg) {
        return false;
      }
-     if (!msg.sequence) {
+     if (!msg.frames) {
        return false;
      }
-     if (!msg.sequence.leds) {
+     if (!Array.isArray(msg.frames)) {
        return false;
      }
-     let leds = msg.sequence.leds;
-     if (!Array.isArray(leds)) {
+     if (msg.frames.length === 0) {
        return false;
      }
-     if (!Array.isArray(leds[0])) {
+     if (!msg.frames[0].leds) {
+       return false;
+     }
+     if (!Array.isArray(msg.frames[0].leds)) {
        return false;
      }
      return true;
    }
 
   ngOnInit() {
+    this.initMessage();
     this.lightMessageService.loadLatest( (msg) => {
       if (this.validLightMessage(msg)) {
-        this.lightMessage = msg;
-      } else {
-        this.clearLeds();
+        this.lightMessage = JSON.parse(JSON.stringify(msg));
+        // make currentFrame valid
+        this.lightMessage.currentFrame = this.lightMessage.currentFrame || 0 
       }
-      this.showLedFrame(0);
-    })
+    }) 
   }
 
-  showLedFrame(frameIndex) {
-    this.leds = this.lightMessage.sequence.leds[frameIndex];
-    console.log(this.leds)
-  }
 
-  switchLed(cell) {
+
+  switchLed(x,y) {
     let newColor = this.ledControlService.getColor();
-    if (cell.color == newColor) {
-      cell.color = '#000'
-    } else {
-      cell.color = newColor;
+    let currentColor = this.getColor(x,y);
+    if (currentColor == newColor) {
+      newColor = '#000'
     }
+    this.setColor(x,y,newColor)
+    
   }
 
   save() {

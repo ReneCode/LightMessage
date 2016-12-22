@@ -51,33 +51,34 @@ export class LightMessageService {
       .subscribe( 
         (res:Response) =>  {
           let result = res.json();
-          console.log(result);
           callback(result)
         },
         (err) => this.handleError(err) );
   }
 
-  save(lightMessage, callback) { 
+  save(message, callback) { 
     let options = { headers: this.headers}
-    if (lightMessage._id) {
+    if (!message.username) {
+      message.username = 'admin'
+    }
+    if (message._id) {
       // update existing message
-      let urlPut = this.url + '/' + lightMessage._id; 
-      this.http.put(urlPut, lightMessage, options) 
+      let urlPut = this.url + '/' + message._id; 
+      this.http.put(urlPut, message, options) 
         .subscribe( 
           (res:Response) => {
-            callback(lightMessage._id)
+            callback(message._id)
           }, 
           (err) => this.handleError(err) );  
       
     } else {
       // create new message
-      this.http.post(this.url, lightMessage, options)
+      this.http.post(this.url, message, options)
         .subscribe( 
           (res:Response) => {
             // extract the id (last part of the retuned created-url)
             let rx = /\w+\/(.*)/;
             let id = rx.exec(res.text());
-            console.log(id);
             if (id.length >= 2) {
               callback(id[1])
             } else {

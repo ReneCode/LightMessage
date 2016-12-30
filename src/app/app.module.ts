@@ -5,7 +5,6 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { LedGridComponent } from './led-grid/led-grid.component';
-import { LedCellComponent } from './led-cell/led-cell.component';
 import { LedControlComponent } from './led-control/led-control.component';
 import { LedControlService } from './led-control.service';
 import { LightMessageService } from './light-message.service'
@@ -14,7 +13,6 @@ import { LightMessageService } from './light-message.service'
   declarations: [
     AppComponent,
     LedGridComponent,
-    LedCellComponent,
     LedControlComponent
   ],
   imports: [

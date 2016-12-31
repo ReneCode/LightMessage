@@ -80,9 +80,10 @@ export class LightMessage {
     }
 
     copyFrame() {
-        let newFrame = this.newFrame();
-        this.frames.push(newFrame)
-        this.currentFrame = this.frames.length - 1
+        // copy current Frame after the current frame
+        let newFrame = JSON.parse(JSON.stringify( this.frames[ this.currentFrame ] ));
+        this.frames.splice(this.currentFrame+1, 0, newFrame)
+        this.currentFrame++
     }
 
     private ledIndex(x, y) {

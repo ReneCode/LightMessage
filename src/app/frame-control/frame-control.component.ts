@@ -18,7 +18,6 @@ export class FrameControlComponent implements OnInit {
 
 
   isEnable(btn) {
-
   }
 
   onNew() {

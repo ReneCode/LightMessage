@@ -12,4 +12,26 @@ export class FrameControlComponent implements OnInit {
   ngOnInit() {
   }
 
+
+  isEnable(btn) {
+
+  }
+
+  onNew() {
+
+  }
+
+
+  onDelete() {
+
+  }
+
+  onRight() {
+
+  }
+
+  onLeft() {
+
+  }
+  
 }

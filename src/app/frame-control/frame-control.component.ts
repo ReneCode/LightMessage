@@ -22,19 +22,20 @@ export class FrameControlComponent implements OnInit {
   }
 
   onNew() {
-
+    this.lightMesage.copyFrame()
   }
 
 
   onDelete() {
-
+    this.lightMesage.deleteFrame()
   }
 
-  onRight() {
-
+  onNext() {
+    this.lightMesage.nextFrame()
   }
 
-  onLeft() {
+  onPrevious() {
+    this.lightMesage.previousFrame()
 
   }
   

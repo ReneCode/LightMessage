@@ -17,10 +17,10 @@ export class LightMessage {
         this.currentFrame = 0;
     }
 
-    static createFromJson(obj) : LightMessage {
+    static createFromJson(obj): LightMessage {
         let {size_x, size_y} = obj;
         let lm: LightMessage
-        if (size_x  && size_y) {
+        if (size_x && size_y) {
             lm = new LightMessage(size_x, size_y);
             lm.username = obj.username;
             lm.name = obj.name;
@@ -31,7 +31,7 @@ export class LightMessage {
         return lm;
     }
 
-    newFrame() {
+    private newFrame() {
         let offColor = 0;
         let leds = [];
         for (let i = 0; i < this.size_x; i++) {
@@ -44,7 +44,48 @@ export class LightMessage {
         }
     }
 
-    ledIndex(x, y) {
+    nextFrame() {
+        if (this.currentFrame < this.frames.length - 1) {
+            this.currentFrame++;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    previousFrame() {
+        console.log(this)
+        if (this.currentFrame > 0) {
+            this.currentFrame--;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    deleteFrame() {
+        if (this.frames.length > 1) {
+            console.log('### A', this.frames);
+            this.frames.splice(this.currentFrame, 1);
+            console.log('### B', this.frames);
+            if (this.currentFrame >= this.frames.length) {
+                this.currentFrame--
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    copyFrame() {
+        let newFrame = this.newFrame();
+        this.frames.push(newFrame)
+        this.currentFrame = this.frames.length - 1
+    }
+
+    private ledIndex(x, y) {
         if (x >= 0 && x < this.size_x && y >= 0 && y < this.size_y) {
             return x + y * this.size_x;
         } else {

@@ -55,7 +55,6 @@ export class LightMessage {
 
 
     previousFrame() {
-        console.log(this)
         if (this.currentFrame > 0) {
             this.currentFrame--;
             return true;
@@ -67,9 +66,7 @@ export class LightMessage {
 
     deleteFrame() {
         if (this.frames.length > 1) {
-            console.log('### A', this.frames);
             this.frames.splice(this.currentFrame, 1);
-            console.log('### B', this.frames);
             if (this.currentFrame >= this.frames.length) {
                 this.currentFrame--
             }
@@ -92,6 +89,10 @@ export class LightMessage {
         } else {
             return 0;
         }
+    }
+
+    getStatus() {
+        return `${this.currentFrame+1} / ${this.frames.length}`
     }
 
     getColor(x, y) {

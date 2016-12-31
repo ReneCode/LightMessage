@@ -41,7 +41,6 @@ export class LightMessageService {
           try {
             msg = LightMessage.createFromJson( res.json() );
             if (msg.isValid()) {
-              console.log('##valid', msg);
 
             }
           }

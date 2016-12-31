@@ -20,6 +20,13 @@ export class FrameControlComponent implements OnInit {
   isEnable(btn) {
   }
 
+  getStatus() {
+    if (this.lightMesage) {
+      return this.lightMesage.getStatus();
+    }
+    return '';
+  }
+
   onNew() {
     this.lightMesage.copyFrame()
   }

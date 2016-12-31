@@ -1,0 +1,41 @@
+.container {
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: row;
+
+}
+
+.btn {
+  background-color: #aaa;
+  padding: 5px;
+  margin: 3px;
+  border: 0.1px solid #eee;
+  border-right: 1px solid #888;
+  border-bottom: 1px solid #888;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  border: 0.1px solid #333;
+    
+}
+
+.left, .right {
+    align-self: center;
+    color: #333;
+}
+
+.new {
+    color: #ee3;
+}
+
+.delete {
+    color: #e33;
+}
+
+.container-middle {
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: column;
+}

@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { LedControlService } from '../led-control.service'
 
 @Component({
-  selector: 'app-led-control',
-  templateUrl: './led-control.component.html',
-  styleUrls: ['./led-control.component.scss']
+  selector: 'app-color',
+  templateUrl: './color.component.html',
+  styleUrls: ['./color.component.scss']
 })
-export class LedControlComponent implements OnInit {
+export class ColorComponent implements OnInit {
 
   colors = [ ];
 

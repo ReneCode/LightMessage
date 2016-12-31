@@ -3,15 +3,15 @@ import { LedControlService } from '../led-control.service'
 import { LightMessageService } from '../light-message.service'
 
 @Component({
-  selector: 'app-led-grid',
-  templateUrl: './led-grid.component.html',
-  styleUrls: ['./led-grid.component.scss']
+  selector: 'app-grid',
+  templateUrl: './grid.component.html',
+  styleUrls: ['./grid.component.scss']
 })
 
 
 
 
-export class LedGridComponent implements OnInit {
+export class GridComponent implements OnInit {
 
   // leds = [];
   xIndex = [];

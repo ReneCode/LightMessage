@@ -1,12 +1,15 @@
 
-.container {
+.flex-container {
 	display: -webkit-flex;
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
 }
 
+.gap {
+	width: 50px;
+}
+
 .item {
-	border: 0.1px gray solid;
-	
+//	border: 1px solid black;
 }

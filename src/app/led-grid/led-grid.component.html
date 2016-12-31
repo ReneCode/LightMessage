@@ -1,9 +1,0 @@
-<div class="container">
-  <div *ngFor="let iy of yIndex" class="row">
-    <div *ngFor="let ix of xIndex" class="col-xs-2 led-cell" [style.background]="getColor(ix,iy)" (click)="switchLed(ix,iy)"></div>
-  </div>
-
-</div>
-
-
-<button class="btn btn-info" (click)="save()">Save Message</button>

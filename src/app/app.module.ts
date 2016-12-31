@@ -4,16 +4,16 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { LedGridComponent } from './led-grid/led-grid.component';
-import { LedControlComponent } from './led-control/led-control.component';
+import { GridComponent } from './grid/grid.component';
+import { ColorComponent } from './color/color.component';
 import { LedControlService } from './led-control.service';
 import { LightMessageService } from './light-message.service'
 
 @NgModule({
   declarations: [
     AppComponent,
-    LedGridComponent,
-    LedControlComponent
+    GridComponent,
+    ColorComponent
   ],
   imports: [
     BrowserModule,

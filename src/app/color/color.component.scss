@@ -1,0 +1,30 @@
+
+.container {
+	display: -webkit-flex;
+	display: flex;
+	width: 200px;
+	flex-wrap: wrap;
+	justify-content: center;
+//	border: 1px dotted red;
+}
+
+.color {
+
+	width: 30px;
+	height: 30px;
+	padding: 3px;
+	margin: 3px;
+	border: 2px solid #ccc;
+	border-radius: 3px;
+	text-align: center;
+
+}
+
+.color:hover {
+	border: 2px solid #111;
+	cursor: pointer;
+}
+
+.active {
+	border: 2px solid #000;
+}

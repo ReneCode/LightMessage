@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+
+import { LightMessage } from '../light-message'
+
 
 @Component({
   selector: 'app-frame-control',
@@ -7,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FrameControlComponent implements OnInit {
 
+  @Input('lightmessage') lightMesage: LightMessage
   constructor() { }
 
   ngOnInit() {

@@ -1,0 +1,26 @@
+
+.container-row {
+	display: -webkit-flex;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.container-col {
+	display: -webkit-flex;
+	display: flex;
+	flex-direction: column;
+}
+
+.gap-width {
+	width: 40px;
+}
+
+.gap-height {
+	height: 40px;
+}
+
+.frame-control {
+	align-self: center;
+}
+

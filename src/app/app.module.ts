@@ -8,14 +8,16 @@ import { GridComponent } from './grid/grid.component';
 import { ColorComponent } from './color/color.component';
 import { LedControlService } from './led-control.service';
 import { LightMessageService } from './light-message.service';
-import { FrameControlComponent } from './frame-control/frame-control.component'
+import { FrameControlComponent } from './frame-control/frame-control.component';
+import { EditComponent } from './edit/edit.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     GridComponent,
     ColorComponent,
-    FrameControlComponent
+    FrameControlComponent,
+    EditComponent
   ],
   imports: [
     BrowserModule,

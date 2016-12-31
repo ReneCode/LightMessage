@@ -4,6 +4,8 @@ import { Observable } from 'rxjs/Observable'
 
 import { environment } from '../environments/environment'
 
+import { LightMessage } from './light-message'
+
 /*
 export class LightMessage {
   _id: number,
@@ -17,6 +19,9 @@ export class LightMessageService {
   private url = environment.api_server + '/lights';
   private headers: Headers;
   private currentUsername = "test-user";
+
+  SIZE_X = 4
+  SIZE_Y = 4
 
 
   constructor(private http: Http) {
@@ -32,14 +37,18 @@ export class LightMessageService {
     this.http.get(urlLatest, options)
       .subscribe( 
         (res:Response) =>  {
-          let result = null;
+          let msg: LightMessage = null;
           try {
-            result = res.json();
+            msg = LightMessage.createFromJson( res.json() );
+            if (msg.isValid()) {
+              console.log('##valid', msg);
+
+            }
           }
           catch (e) {
-            result = null;
+            msg = new LightMessage(this.SIZE_X, this.SIZE_Y);
           }
-          callback(result)
+          callback(msg)
         },
         (err) => this.handleError(err) );
   }

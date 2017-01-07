@@ -9,7 +9,9 @@ import { ColorComponent } from './color/color.component';
 import { LedControlService } from './led-control.service';
 import { LightMessageService } from './light-message.service';
 import { FrameControlComponent } from './frame-control/frame-control.component';
-import { EditComponent } from './edit/edit.component'
+import { FrameListComponent } from './frame-list/frame-list.component';
+import { EditComponent } from './edit/edit.component';
+import { FrameViewComponent } from './frame-view/frame-view.component'
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { EditComponent } from './edit/edit.component'
     GridComponent,
     ColorComponent,
     FrameControlComponent,
-    EditComponent
+    FrameListComponent,
+    EditComponent,
+    FrameViewComponent
   ],
   imports: [
     BrowserModule,

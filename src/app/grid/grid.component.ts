@@ -36,6 +36,10 @@ export class GridComponent implements OnInit {
   ngOnInit() {
   }
 
+  getCellClass() {
+    return "edit-cell";
+  }
+
   getColor(x, y) {
     if (this.lightMessage) {
       return this.lightMessage.getColor(x, y)

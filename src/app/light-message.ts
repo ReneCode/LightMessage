@@ -1,20 +1,59 @@
+
+export class LightFrame {
+    leds = []
+
+    constructor(private size_x: number, private size_y: number, leds) {
+        this.leds = leds
+    }
+
+    get sizeX() {
+        return this.size_x
+    }
+
+    get sizeY() {
+        return this.size_y
+    }
+
+    private ledIndex(x: number, y) {
+        if (x >= 0 && x < this.sizeX && y >= 0 && y < this.sizeY) {
+            return x + y * this.sizeX;
+        } else {
+            return 0;
+        }
+    }
+
+    getColor(x: number, y: number) {
+        let idx = this.ledIndex(x, y)
+        return this.leds[idx];
+
+    }
+
+    setColor(x: number, y: number, color: string) {
+        let idx = this.ledIndex(x, y)
+        this.leds[idx] = color;
+    }
+
+
+
+}
+
 export class LightMessage {
 
 
     username = undefined
     _id = undefined
-    name = 'msg-1'
-    currentFrame = 0
-    size_x
-    size_y
+    name: string = 'msg-1'
+    private currentFrameIdx: number = 0
+    size_x: number
+    size_y: number
     frames = []
 
 
     constructor(size_x, size_y) {
         this.size_x = size_x;
         this.size_y = size_y
-        this.frames = [this.newFrame()];
-        this.currentFrame = 0;
+        this.frames = [];
+        this.currentFrameIdx = 0;
     }
 
     static createFromJson(obj): LightMessage {
@@ -24,8 +63,10 @@ export class LightMessage {
             lm = new LightMessage(size_x, size_y);
             lm.username = obj.username;
             lm.name = obj.name;
-            lm.currentFrame = obj.currentFrame || 0
-            lm.frames = JSON.parse(JSON.stringify(obj.frames))
+            lm.currentFrameIdx = obj.currentFrame || 0
+            for (let jsonFrame of obj.frames) {
+                lm.frames.push( new LightFrame(size_x, size_y, jsonFrame.leds))
+            }
         }
 
         return lm;
@@ -39,14 +80,12 @@ export class LightMessage {
                 leds.push(offColor);
             }
         }
-        return {
-            leds: leds
-        }
+        return new LightFrame(this.size_x, this.size_y, leds);
     }
 
     nextFrame() {
-        if (this.currentFrame < this.frames.length - 1) {
-            this.currentFrame++;
+        if (this.currentFrameIdx < this.frames.length - 1) {
+            this.currentFrameIdx++;
             return true;
         } else {
             return false;
@@ -55,8 +94,8 @@ export class LightMessage {
 
 
     previousFrame() {
-        if (this.currentFrame > 0) {
-            this.currentFrame--;
+        if (this.currentFrameIdx > 0) {
+            this.currentFrameIdx--;
             return true;
         } else {
             return false;
@@ -66,9 +105,9 @@ export class LightMessage {
 
     deleteFrame() {
         if (this.frames.length > 1) {
-            this.frames.splice(this.currentFrame, 1);
-            if (this.currentFrame >= this.frames.length) {
-                this.currentFrame--
+            this.frames.splice(this.currentFrameIdx, 1);
+            if (this.currentFrameIdx >= this.frames.length) {
+                this.currentFrameIdx--
             }
             return true;
         } else {
@@ -78,36 +117,34 @@ export class LightMessage {
 
     copyFrame() {
         // copy current Frame after the current frame
-        let newFrame = JSON.parse(JSON.stringify( this.frames[ this.currentFrame ] ));
-        this.frames.splice(this.currentFrame+1, 0, newFrame)
-        this.currentFrame++
+
+        let curFrame = this.frames[ this.currentFrameIdx ]
+        let copyLeds = JSON.parse(JSON.stringify(curFrame.leds))
+        let newFrame = new LightFrame(this.size_x, this.size_y, copyLeds);
+        this.frames.splice(this.currentFrameIdx+1, 0, newFrame)
+        this.currentFrameIdx++
     }
 
-    private ledIndex(x, y) {
-        if (x >= 0 && x < this.size_x && y >= 0 && y < this.size_y) {
-            return x + y * this.size_x;
-        } else {
-            return 0;
-        }
-    }
+
+    // currentFrame() {
+    //     let currentFrame = this.frames[ this.currentFrame ].leds ));
+    // }
 
     getStatus() {
-        return `${this.currentFrame+1} / ${this.frames.length}`
+        return `${this.currentFrameIdx+1} / ${this.frames.length}`
     }
 
     getColor(x, y) {
-        let idx = this.ledIndex(x, y)
-        let idxFrame = this.currentFrame;
+        let idxFrame = this.currentFrameIdx;
         let frame = this.frames[idxFrame];
-        return frame.leds[idx];
+        return frame.getColor(x,y);
     }
 
 
     setColor(x, y, color) {
-        let idx = this.ledIndex(x, y)
-        let idxFrame = this.currentFrame;
+        let idxFrame = this.currentFrameIdx;
         let frame = this.frames[idxFrame];
-        frame.leds[idx] = color;
+        frame.setColor(x,y,color);
     }
 
 

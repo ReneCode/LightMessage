@@ -1,0 +1,21 @@
+
+.list {
+  display: flex;
+  flex-direction: column;
+//   border: 1px dashed red;
+}
+
+.row {
+  display: flex;
+}
+
+.list-cell {
+  background-color: grey;
+  margin: 1px;
+  border: 1px solid black;
+  width: 10px;
+  height: 10px;
+  border-radius: 1px;
+}
+
+

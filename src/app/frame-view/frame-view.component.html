@@ -1,0 +1,5 @@
+<div class="list">
+  <div *ngFor="let iy of getRangeY()" class="row">
+    <div *ngFor="let ix of getRangeX()" [className]="getCellClass()" [style.background]="getColor(ix,iy)" (click)="clickCell(ix,iy)"></div>
+  </div>
+</div>

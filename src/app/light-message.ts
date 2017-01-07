@@ -1,6 +1,7 @@
 
 export class LightFrame {
     leds = []
+    idx: number = 0
 
     constructor(private size_x: number, private size_y: number, leds) {
         this.leds = leds
@@ -65,8 +66,9 @@ export class LightMessage {
             lm.name = obj.name;
             lm.currentFrameIdx = obj.currentFrame || 0
             for (let jsonFrame of obj.frames) {
-                lm.frames.push( new LightFrame(size_x, size_y, jsonFrame.leds))
+                lm.frames.push(new LightFrame(size_x, size_y, jsonFrame.leds))
             }
+            lm.reIndexFrames()
         }
 
         return lm;
@@ -109,6 +111,7 @@ export class LightMessage {
             if (this.currentFrameIdx >= this.frames.length) {
                 this.currentFrameIdx--
             }
+            this.reIndexFrames();
             return true;
         } else {
             return false;
@@ -117,14 +120,21 @@ export class LightMessage {
 
     copyFrame() {
         // copy current Frame after the current frame
-
         let curFrame = this.frames[ this.currentFrameIdx ]
         let copyLeds = JSON.parse(JSON.stringify(curFrame.leds))
         let newFrame = new LightFrame(this.size_x, this.size_y, copyLeds);
         this.frames.splice(this.currentFrameIdx+1, 0, newFrame)
         this.currentFrameIdx++
+        this.reIndexFrames();
     }
 
+
+    private reIndexFrames() {
+        let idx=0;
+        this.frames.forEach( f => {
+            f.idx = idx++;
+        })
+    }
 
     // currentFrame() {
     //     let currentFrame = this.frames[ this.currentFrame ].leds ));
@@ -147,6 +157,9 @@ export class LightMessage {
         frame.setColor(x,y,color);
     }
 
+    isCurrentFrame(frame: LightFrame) {
+        return  frame == this.frames[1];
+    }
 
     isValid() {
         if (!this.frames) {

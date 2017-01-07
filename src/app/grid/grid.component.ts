@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { LedControlService } from '../led-control.service'
 import { LightMessageService } from '../light-message.service'
-import { LightMessage } from '../light-message'
+import { LightFrame } from '../light-message'
 
 @Component({
   selector: 'app-grid',
@@ -18,7 +18,7 @@ export class GridComponent implements OnInit {
   xIndex = [];
   yIndex = [];
 
-  @Input('lightmessage') lightMessage: LightMessage
+  @Input('currentFrame') frame: LightFrame
 
 
   constructor(private ledControlService: LedControlService,
@@ -41,8 +41,8 @@ export class GridComponent implements OnInit {
   }
 
   getColor(x, y) {
-    if (this.lightMessage) {
-      return this.lightMessage.getColor(x, y)
+    if (this.frame) {
+      return this.frame.getColor(x, y)
     } else {
       return 0;
     }
@@ -51,18 +51,18 @@ export class GridComponent implements OnInit {
 
   switchLed(x, y) {
     let newColor = this.ledControlService.getColor();
-    let currentColor = this.lightMessage.getColor(x, y);
+    let currentColor = this.frame.getColor(x, y);
     if (currentColor == newColor) {
       newColor = '#000'
     }
-    this.lightMessage.setColor(x, y, newColor)
+    this.frame.setColor(x, y, newColor)
 
   }
 
   save() {
-    this.lightMessageService.save(this.lightMessage, id => {
-      this.lightMessage["_id"] = id;
-    });
+    // this.lightMessageService.save(this.lightMessage, id => {
+    //   this.lightMessage["_id"] = id;
+    // });
   }
 
 

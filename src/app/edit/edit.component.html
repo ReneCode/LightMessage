@@ -1,5 +1,5 @@
 <div class="container-row">
-  <app-grid class="item" [lightmessage]="lightMessage"></app-grid>
+  <app-grid class="item" [currentFrame]="currentFrame"></app-grid>
   <div class="gap-width"></div>
   <div class="container-col">
     <app-color class="color"></app-color>
@@ -8,5 +8,5 @@
   </div>
 </div>
 <div>
-  <app-frame-list [lightmessage]="lightMessage"></app-frame-list>
+  <app-frame-list [lightmessage]="lightMessage" [currentFrame]="currentFrame" (selectFrame)="selectFrame($event)"></app-frame-list>
 </div>

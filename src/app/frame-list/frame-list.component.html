@@ -1,3 +1,3 @@
 <div class="frame-container">
-	<app-frame-view *ngFor="let frame of getFrames()" class="frame" [frame]="frame"></app-frame-view>
+	<app-frame-view *ngFor="let frame of getFrames()" [class]="getClassName(frame)" [frame]="frame" (click)="clickFrame(frame)"></app-frame-view>
 </div>

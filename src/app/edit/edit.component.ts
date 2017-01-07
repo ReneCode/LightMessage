@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { LightMessageService } from '../light-message.service'
-import { LightMessage } from '../light-message'
+import { LightMessage, LightFrame } from '../light-message'
 
 @Component({
   selector: 'app-edit',
@@ -11,6 +11,7 @@ import { LightMessage } from '../light-message'
 export class EditComponent implements OnInit {
 
   lightMessage: LightMessage
+  currentFrame: LightFrame
 
   constructor(private lightMessageService: LightMessageService) { }
 
@@ -19,9 +20,14 @@ export class EditComponent implements OnInit {
 
       if (msg && msg.isValid()) {
         this.lightMessage = msg;
+        this.currentFrame = this.lightMessage.frames[0];
       }
     })
     
+  }
+
+  selectFrame(frame: LightFrame) {
+    this.currentFrame = frame;
   }
 
 }

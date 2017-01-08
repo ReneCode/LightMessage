@@ -5,7 +5,5 @@
     <app-color class="color"></app-color>
   </div>
 </div>
-    <app-frame-control class="frame-control" [lightmessage]="lightMessage" (selectFrame)="selectFrame($event)"></app-frame-control>
-<div>
-  <app-frame-list [lightmessage]="lightMessage" [currentFrame]="currentFrame" (selectFrame)="selectFrame($event)"></app-frame-list>
-</div>
+<app-frame-control [lightMessage]="lightMessage" [currentFrame]="currentFrame" (selectFrame)="selectFrame($event)"></app-frame-control>
+

@@ -44,7 +44,6 @@ export class LightMessage {
     username = undefined
     _id = undefined
     name: string = 'msg-1'
-    private currentFrameIdx: number = 0
     size_x: number
     size_y: number
     frames = []
@@ -54,7 +53,6 @@ export class LightMessage {
         this.size_x = size_x;
         this.size_y = size_y
         this.frames = [];
-        this.currentFrameIdx = 0;
     }
 
     static createFromJson(obj): LightMessage {
@@ -64,7 +62,6 @@ export class LightMessage {
             lm = new LightMessage(size_x, size_y);
             lm.username = obj.username;
             lm.name = obj.name;
-            lm.currentFrameIdx = obj.currentFrame || 0
             for (let jsonFrame of obj.frames) {
                 lm.frames.push(new LightFrame(size_x, size_y, jsonFrame.leds))
             }
@@ -85,47 +82,26 @@ export class LightMessage {
         return new LightFrame(this.size_x, this.size_y, leds);
     }
 
-    nextFrame() {
-        if (this.currentFrameIdx < this.frames.length - 1) {
-            this.currentFrameIdx++;
-            return true;
-        } else {
-            return false;
+
+    deleteFrame(frame: LightFrame): LightFrame {
+        if (this.frames.length <= 1) {
+            // do not delete the last frame
+            return null;
         }
-    }
-
-
-    previousFrame() {
-        if (this.currentFrameIdx > 0) {
-            this.currentFrameIdx--;
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
-    deleteFrame() {
-        if (this.frames.length > 1) {
-            this.frames.splice(this.currentFrameIdx, 1);
-            if (this.currentFrameIdx >= this.frames.length) {
-                this.currentFrameIdx--
-            }
-            this.reIndexFrames();
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    copyFrame() {
-        // copy current Frame after the current frame
-        let curFrame = this.frames[ this.currentFrameIdx ]
-        let copyLeds = JSON.parse(JSON.stringify(curFrame.leds))
-        let newFrame = new LightFrame(this.size_x, this.size_y, copyLeds);
-        this.frames.splice(this.currentFrameIdx+1, 0, newFrame)
-        this.currentFrameIdx++
+        let currentIndex = frame.idx;
+        this.frames.splice(currentIndex, 1);
         this.reIndexFrames();
+        currentIndex = Math.min(currentIndex, this.frames.length-1)
+        return this.frames[currentIndex];
+    }
+
+    copyFrame(frame: LightFrame): LightFrame {
+        // copy current Frame behind the current frame
+        let copyLeds = JSON.parse(JSON.stringify(frame.leds))
+        let newFrame = new LightFrame(this.size_x, this.size_y, copyLeds);
+        this.frames.splice(frame.idx+1, 0, newFrame)
+        this.reIndexFrames();
+        return newFrame;
     }
 
 
@@ -136,28 +112,7 @@ export class LightMessage {
         })
     }
 
-    // currentFrame() {
-    //     let currentFrame = this.frames[ this.currentFrame ].leds ));
-    // }
-
-    getStatus() {
-        return `${this.currentFrameIdx+1} / ${this.frames.length}`
-    }
-
-    getColor(x, y) {
-        let idxFrame = this.currentFrameIdx;
-        let frame = this.frames[idxFrame];
-        return frame.getColor(x,y);
-    }
-
-
-    setColor(x, y, color) {
-        let idxFrame = this.currentFrameIdx;
-        let frame = this.frames[idxFrame];
-        frame.setColor(x,y,color);
-    }
-
-    isCurrentFrame(frame: LightFrame) {
+     isCurrentFrame(frame: LightFrame) {
         return  frame == this.frames[1];
     }
 

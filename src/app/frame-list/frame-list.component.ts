@@ -8,12 +8,12 @@ import { LightMessage, LightFrame } from '../light-message'
 })
 export class FrameListComponent {
 
-  @Input('lightmessage') lightMessage: LightMessage
+  @Input('lightMessage') lightMessage: LightMessage
   @Input('currentFrame') currentFrame: LightFrame
   @Output('selectFrame') selectFrame = new EventEmitter<LightFrame>();
 
 
-  maxFrameCount = 5
+  maxFrameCount = 7
 
   constructor() { }
 
@@ -48,16 +48,6 @@ export class FrameListComponent {
         frames.push(emptyFrame)
       }
     }
-
-
-    // let frameCount = 0;
-    // for (let i=this.currentFrame.idx; i<fillLeftCount; i++, frameCount++) {
-    //   frames.push( emptyFrame )
-    // }
-        
-    // let showFrames = this.lightMessage.frames.slice()
-
-    // frames = frames.concat(this.lightMessage.frames)
     return frames
   }
 
@@ -74,18 +64,6 @@ export class FrameListComponent {
     this.selectFrame.emit(frame);
   }
 
-  onPreviousFrame() {
-    let previousFrame = this.lightMessage.getPreviousFrame(this.currentFrame) 
-    if (previousFrame) {
-      this.selectFrame.emit(previousFrame)
-    }
-  }
 
-  onNextFrame() {
-    let nextFrame = this.lightMessage.getNextFrame(this.currentFrame)
-    if (nextFrame) {
-      this.selectFrame.emit(nextFrame)
-    }
-  }
 
 }

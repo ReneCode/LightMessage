@@ -10,7 +10,8 @@ import { LightMessage, LightFrame } from '../light-message'
 })
 export class FrameControlComponent implements OnInit {
 
-  @Input('lightmessage') lightMesage: LightMessage
+  @Input('lightMessage') lightMessage: LightMessage
+  @Input('currentFrame') currentFrame: LightFrame
   @Output('selectFrame') selectFrame = new EventEmitter<LightFrame>();
 
   constructor() { }
@@ -22,20 +23,41 @@ export class FrameControlComponent implements OnInit {
   isEnable(btn) {
   }
 
-  getStatus() {
-    if (this.lightMesage) {
-      return this.lightMesage.getStatus();
+  // getStatus() {
+  //   if (this.lightMesage) {
+  //     return this.lightMesage.getStatus();
+  //   }
+  //   return '';
+  // }
+
+  onPreviousFrame() {
+
+    let previousFrame = this.lightMessage.getPreviousFrame(this.currentFrame) 
+    if (previousFrame) {
+      this.onSelectFrame(previousFrame)
     }
-    return '';
+  }
+
+  onNextFrame() {
+    let nextFrame = this.lightMessage.getNextFrame(this.currentFrame)
+    if (nextFrame) {
+      this.onSelectFrame(nextFrame)
+    }
   }
 
   onNew() {
-    this.lightMesage.copyFrame()
+    let newFrame = this.lightMessage.copyFrame(this.currentFrame);
+    this.onSelectFrame(newFrame);
   }
 
   onDelete() {
-    this.lightMesage.deleteFrame()
+    let newCurrentFrame = this.lightMessage.deleteFrame(this.currentFrame)
+    if (newCurrentFrame) {
+      this.onSelectFrame(newCurrentFrame)
+    }
   }
 
-  
+  onSelectFrame(frame: LightFrame) {
+    this.selectFrame.emit(frame)
+  }
 }

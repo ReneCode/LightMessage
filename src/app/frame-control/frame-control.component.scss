@@ -14,6 +14,7 @@
   border-bottom: 1px solid #888;
   border-radius: 3px;
   cursor: pointer;
+  align-self: center;
 }
 
 .btn:hover {
@@ -22,7 +23,6 @@
 }
 
 .left, .right {
-    align-self: center;
     color: #333;
 }
 
@@ -32,10 +32,4 @@
 
 .delete {
     color: #e33;
-}
-
-.container-middle {
-  display: -webkit-flex;
-  display: flex;
-  flex-direction: row;
 }

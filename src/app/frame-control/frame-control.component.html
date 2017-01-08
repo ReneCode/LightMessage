@@ -1,7 +1,10 @@
 <div class="container">
-  <div class="container-middle">
-    <div class="btn new"><i class="fa fa-2x fa-plus" aria-hidden="true" (click)="onNew()"></i></div>
-    <div class="btn delete"><i class="fa fa-2x fa-times" aria-hidden="true" (click)="onDelete()"></i></div>
-    <div>{{getStatus()}}</div>
-  </div>
+
+	<div class="btn left"><i class="fa fa-2x fa-arrow-left" aria-hidden="true" (click)="onPreviousFrame()"></i></div>
+	<app-frame-list [lightMessage]="lightMessage" [currentFrame]="currentFrame" (selectFrame)="onSelectFrame($event)"></app-frame-list>
+  <div class="btn right"><i class="fa fa-2x fa-arrow-right" aria-hidden="true" (click)="onNextFrame()"></i></div>
+
+  <div class="btn new"><i class="fa fa-2x fa-plus" aria-hidden="true" (click)="onNew()"></i></div>
+  <div class="btn delete"><i class="fa fa-2x fa-times" aria-hidden="true" (click)="onDelete()"></i></div>
 </div>
+

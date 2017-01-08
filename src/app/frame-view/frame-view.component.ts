@@ -24,7 +24,8 @@ export class FrameViewComponent implements OnInit {
   }
 
   getRangeX() {
-    return this.range(0, this.frame.sizeX-1);
+    // return this.range(0, this.frame.sizeX-1);
+    return this.range(0,3)
   }
 
   getRangeY() {
@@ -32,7 +33,7 @@ export class FrameViewComponent implements OnInit {
   }
 
   getCellClass() {
-    return "list-cell"
+    return "cell"
   }
 
   getColor(x, y) {

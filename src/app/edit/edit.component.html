@@ -3,10 +3,9 @@
   <div class="gap-width"></div>
   <div class="container-col">
     <app-color class="color"></app-color>
-    <div class="gap-height"></div>
-    <app-frame-control class="frame-control" [lightmessage]="lightMessage"></app-frame-control>
   </div>
 </div>
+    <app-frame-control class="frame-control" [lightmessage]="lightMessage" (selectFrame)="selectFrame($event)"></app-frame-control>
 <div>
   <app-frame-list [lightmessage]="lightMessage" [currentFrame]="currentFrame" (selectFrame)="selectFrame($event)"></app-frame-list>
 </div>

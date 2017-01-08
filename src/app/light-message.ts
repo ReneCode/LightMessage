@@ -161,6 +161,23 @@ export class LightMessage {
         return  frame == this.frames[1];
     }
 
+
+    getPreviousFrame(frame: LightFrame) : LightFrame {
+        if (frame.idx > 0) {
+            return this.frames[frame.idx-1];
+        }
+        return null;
+    }
+
+    getNextFrame(frame: LightFrame) : LightFrame {
+        if (frame.idx < this.frames.length-1) {
+            return this.frames[frame.idx+1];
+        }
+        return null;
+    }
+
+
+
     isValid() {
         if (!this.frames) {
             return false;

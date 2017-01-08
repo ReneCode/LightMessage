@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
-import { LightMessage } from '../light-message'
+import { LightMessage, LightFrame } from '../light-message'
 
 
 @Component({
@@ -11,6 +11,8 @@ import { LightMessage } from '../light-message'
 export class FrameControlComponent implements OnInit {
 
   @Input('lightmessage') lightMesage: LightMessage
+  @Output('selectFrame') selectFrame = new EventEmitter<LightFrame>();
+
   constructor() { }
 
   ngOnInit() {
@@ -31,18 +33,9 @@ export class FrameControlComponent implements OnInit {
     this.lightMesage.copyFrame()
   }
 
-
   onDelete() {
     this.lightMesage.deleteFrame()
   }
 
-  onNext() {
-    this.lightMesage.nextFrame()
-  }
-
-  onPrevious() {
-    this.lightMesage.previousFrame()
-
-  }
   
 }

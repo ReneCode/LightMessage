@@ -1,21 +1,20 @@
 
-.list {
+.grid {
   display: flex;
   flex-direction: column;
-//   border: 1px dashed red;
 }
 
 .row {
   display: flex;
 }
 
-.list-cell {
+.cell {
   background-color: grey;
   margin: 1px;
-  border: 1px solid black;
-  width: 10px;
-  height: 10px;
-  border-radius: 1px;
+  border: 0.1px solid #aaa;
+  width: 8px;
+  height: 8px;
+  // border-radius: 1px;
 }
 
 

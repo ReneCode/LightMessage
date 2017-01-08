@@ -1,3 +1,5 @@
 <div class="frame-container">
-	<app-frame-view *ngFor="let frame of getFrames()" [class]="getClassName(frame)" [frame]="frame" (click)="clickFrame(frame)"></app-frame-view>
+	<div class="btn left"><i class="fa fa-2x fa-arrow-left" aria-hidden="true" (click)="onPreviousFrame()"></i></div>
+	<app-frame-view *ngFor="let frame of getFrames()" [class]="getClassName(frame)" [frame]="frame" (click)="onSelectFrame(frame)"></app-frame-view>
+  <div class="btn right"><i class="fa fa-2x fa-arrow-right" aria-hidden="true" (click)="onNextFrame()"></i></div>
 </div>

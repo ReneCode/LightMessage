@@ -9,11 +9,32 @@
 .frame {
 	margin: 5px;
 	cursor: pointer;
-	border: 2px solid #222;
-	border-color: transparent
+	border: 3px solid transparent;
+	// border-color: 
 }
 
 .active {
-	// background-color: #bbb;
-	border-color: #222;
+	border-color: #444;
+}
+
+
+.btn {
+  background-color: #aaa;
+  padding: 5px;
+  margin: 3px;
+  border: 0.1px solid #eee;
+  border-right: 1px solid #888;
+  border-bottom: 1px solid #888;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  border: 0.1px solid #333;
+    
+}
+
+.left, .right {
+    align-self: center;
+    color: #333;
 }

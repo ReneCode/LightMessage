@@ -1,4 +1,6 @@
 
+@import '../shared/shared';
+
 .item {
 	align-self: center;
 }
@@ -22,5 +24,12 @@
 
 .gap-height {
 	height: 40px;
+}
+
+
+
+.btn {
+  text-align: center;
+  align-self: center;
 }
 

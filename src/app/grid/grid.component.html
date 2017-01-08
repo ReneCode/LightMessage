@@ -2,8 +2,5 @@
   <div *ngFor="let iy of yIndex" class="row">
     <div *ngFor="let ix of xIndex" [className]="getCellClass()" [style.background]="getColor(ix,iy)" (click)="switchLed(ix,iy)"></div>
   </div>
-
 </div>
 
-
-<button class="button" (click)="save()">Save Message</button>

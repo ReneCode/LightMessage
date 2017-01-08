@@ -7,9 +7,8 @@
     <div class="container-row item">
       <app-frame-add [lightMessage]="lightMessage" [currentFrame]="currentFrame" (selectFrame)="selectFrame($event)"></app-frame-add>
       <app-frame-delete [lightMessage]="lightMessage" [currentFrame]="currentFrame" (selectFrame)="selectFrame($event)"></app-frame-delete>
-
     </div>
+    <div class="btn" (click)="saveLightMessage()"><i class="fa fa-2x fa-floppy-o" aria-hidden="true"></i></div>
   </div>
 </div>
 <app-frame-control [lightMessage]="lightMessage" [currentFrame]="currentFrame" (selectFrame)="selectFrame($event)"></app-frame-control>
-

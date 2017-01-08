@@ -59,11 +59,5 @@ export class GridComponent implements OnInit {
 
   }
 
-  save() {
-    // this.lightMessageService.save(this.lightMessage, id => {
-    //   this.lightMessage["_id"] = id;
-    // });
-  }
-
 
 }

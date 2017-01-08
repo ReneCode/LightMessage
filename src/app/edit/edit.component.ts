@@ -30,4 +30,12 @@ export class EditComponent implements OnInit {
     this.currentFrame = frame;
   }
 
+
+  saveLightMessage() {
+    this.lightMessageService.save(this.lightMessage, id => {
+      this.lightMessage["_id"] = id;
+    });
+  }
+
+
 }

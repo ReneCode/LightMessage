@@ -45,18 +45,6 @@ export class FrameControlComponent implements OnInit {
     }
   }
 
-  onNew() {
-    let newFrame = this.lightMessage.copyFrame(this.currentFrame);
-    this.onSelectFrame(newFrame);
-  }
-
-  onDelete() {
-    let newCurrentFrame = this.lightMessage.deleteFrame(this.currentFrame)
-    if (newCurrentFrame) {
-      this.onSelectFrame(newCurrentFrame)
-    }
-  }
-
   onSelectFrame(frame: LightFrame) {
     this.selectFrame.emit(frame)
   }

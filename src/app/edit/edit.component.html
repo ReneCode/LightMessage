@@ -3,6 +3,12 @@
   <div class="gap-width"></div>
   <div class="container-col">
     <app-color class="color"></app-color>
+    <div class="gap-height"></div>
+    <div class="container-row item">
+      <app-frame-add [lightMessage]="lightMessage" [currentFrame]="currentFrame" (selectFrame)="selectFrame($event)"></app-frame-add>
+      <app-frame-delete [lightMessage]="lightMessage" [currentFrame]="currentFrame" (selectFrame)="selectFrame($event)"></app-frame-delete>
+
+    </div>
   </div>
 </div>
 <app-frame-control [lightMessage]="lightMessage" [currentFrame]="currentFrame" (selectFrame)="selectFrame($event)"></app-frame-control>

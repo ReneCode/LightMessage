@@ -6,7 +6,7 @@ before_script:
   - npm install angular-cli@1.0.0-beta.24
 
 script:
-  - ng build --environment=prod
+  - ng build --prod --environment=prod
   - bash ./scripts/travis-deploy.sh
 
 

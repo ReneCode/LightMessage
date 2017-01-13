@@ -7,8 +7,6 @@
 
 FROM nginx
 
-RUN ng build
-
 COPY dist /usr/share/nginx/html
 
 

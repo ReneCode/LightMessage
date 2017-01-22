@@ -50,9 +50,10 @@ export class LightMessage {
 
 
     constructor(size_x, size_y) {
-        this.size_x = size_x;
+        this.size_x = size_x
         this.size_y = size_y
-        this.frames = [];
+        // create at least on empty frame
+        this.frames = [ this.newFrame() ]
     }
 
     static createFromJson(obj): LightMessage {
@@ -62,6 +63,10 @@ export class LightMessage {
             lm = new LightMessage(size_x, size_y);
             lm.username = obj.username;
             lm.name = obj.name;
+            // create the empty frame, if there are frames from the json-obj
+            if (obj.frames.length > 0) {
+                lm.frames = [];
+            }
             for (let jsonFrame of obj.frames) {
                 lm.frames.push(new LightFrame(size_x, size_y, jsonFrame.leds))
             }

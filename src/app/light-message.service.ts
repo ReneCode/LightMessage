@@ -41,10 +41,15 @@ export class LightMessageService {
           try {
             msg = LightMessage.createFromJson( res.json() );
             if (msg.isValid()) {
-
+            }
+            else {
+              msg = null;
             }
           }
           catch (e) {
+            msg = null;
+          }
+          if (!msg) {
             msg = new LightMessage(this.SIZE_X, this.SIZE_Y);
           }
           callback(msg)

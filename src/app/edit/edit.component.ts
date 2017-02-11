@@ -16,14 +16,13 @@ export class EditComponent implements OnInit {
   constructor(private lightMessageService: LightMessageService) { }
 
   ngOnInit() {
-    this.lightMessageService.loadLatest((msg: LightMessage) => {
-
-      if (msg && msg.isValid()) {
-        this.lightMessage = msg;
-        this.currentFrame = this.lightMessage.frames[0];
-      }
-    })
-    
+    this.lightMessageService.loadLatest()
+      .subscribe(
+        msg => { 
+          this.lightMessage = msg
+          this.currentFrame = this.lightMessage.frames[0]
+        }        
+      )
   }
 
   selectFrame(frame: LightFrame) {

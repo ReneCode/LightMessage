@@ -14,6 +14,7 @@ import { EditComponent } from './edit/edit.component';
 import { FrameViewComponent } from './frame-view/frame-view.component';
 import { FrameAddComponent } from './frame-add/frame-add.component';
 import { FrameDeleteComponent } from './frame-delete/frame-delete.component'
+import { ServerService } from './services/server.service'
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { FrameDeleteComponent } from './frame-delete/frame-delete.component'
   ],
   providers: [
     LedControlService,
-    LightMessageService
+    LightMessageService,
+    ServerService
   ],
   bootstrap: [AppComponent]
 })

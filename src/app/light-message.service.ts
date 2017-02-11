@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http'
 import { Observable } from 'rxjs/Observable'
+import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/catch'
 
 import { environment } from '../environments/environment'
 
 import { LightMessage } from './light-message'
+import { ServerService } from './services/server.service'
 
 /*
 export class LightMessage {
@@ -24,39 +27,48 @@ export class LightMessageService {
   SIZE_Y = 4
 
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private _serverService: ServerService) {
     this.headers = new Headers();
     this.headers.append('Content-Type', 'application/json');
     this.headers.append('Accept', 'application/json');
   }
 
 
-  loadLatest(callback) {
+  loadLatest() : Observable<LightMessage> {
+
+  //   return this._serverService.getServer()
+  //     .subscribe( this.loadLatestLightMessage )
+  // }
+
+  // private loadLatestLightMessage(url: string) : Observable<LightMessage> {
+  //   debugger
+  //   console.log("### load from server:", url)
+
     let options = { headers: this.headers}
     let urlLatest = this.url + '/latest'
-    this.http.get(urlLatest, options)
-      .subscribe( 
-        (res:Response) =>  {
-          let msg: LightMessage = null;
-          try {
-            msg = LightMessage.createFromJson( res.json() );
-            if (msg.isValid()) {
-            }
-            else {
-              msg = null;
-            }
-          }
-          catch (e) {
-            msg = null;
-          }
-          if (!msg) {
-            msg = new LightMessage(this.SIZE_X, this.SIZE_Y);
-          }
-          callback(msg)
-        },
-        (err) => this.handleError(err) );
+    return this.http.get(urlLatest, options)
+      .map( this.extractLatest )
+      .catch( this.handleError)
   }
   
+  private extractLatest(res: Response)  {
+    let msg: LightMessage = null;
+    try {
+      msg = LightMessage.createFromJson( res.json() );
+      if (msg.isValid()) {
+      }
+      else {
+        msg = null;
+      }
+    }
+    catch (e) {
+      msg = null;
+    }
+    if (!msg) {
+      msg = new LightMessage(this.SIZE_X, this.SIZE_Y);
+    }
+    return msg
+  }
 
   load(callback) {
     let options = { headers: this.headers}
@@ -105,6 +117,8 @@ export class LightMessageService {
 
   handleError(err) {
     console.log(err) 
+    let msg = "Server Error"
+    return Observable.throw(msg)
   }
 
 }

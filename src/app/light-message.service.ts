@@ -3,6 +3,7 @@ import { Http, Headers, Response } from '@angular/http'
 import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/catch'
+import 'rxjs/add/operator/concatmap'
 
 import { environment } from '../environments/environment'
 
@@ -26,7 +27,6 @@ export class LightMessageService {
   SIZE_X = 4
   SIZE_Y = 4
 
-
   constructor(private http: Http, private _serverService: ServerService) {
     this.headers = new Headers();
     this.headers.append('Content-Type', 'application/json');
@@ -34,18 +34,19 @@ export class LightMessageService {
   }
 
 
+/*
+use concatMap() to build a observer pipiline
+http://stackoverflow.com/questions/40468311/angular-2-rxjs-nested-observables
+http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html?#instance-method-concatMap
+*/
   loadLatest() : Observable<LightMessage> {
+    return this._serverService.getServer()
+      .concatMap( url => this.loadLatestLightMessage(url))
+  }
 
-  //   return this._serverService.getServer()
-  //     .subscribe( this.loadLatestLightMessage )
-  // }
-
-  // private loadLatestLightMessage(url: string) : Observable<LightMessage> {
-  //   debugger
-  //   console.log("### load from server:", url)
-
+  private loadLatestLightMessage(url: string) : Observable<LightMessage> {
     let options = { headers: this.headers}
-    let urlLatest = this.url + '/latest'
+    let urlLatest = url + '/lights/latest'
     return this.http.get(urlLatest, options)
       .map( this.extractLatest )
       .catch( this.handleError)

@@ -15,6 +15,7 @@ git config user.name ${GIT_NAME}
 
 # copy new files
 cp -r ../dist/. .
+cp -r ../src/api/. ./api/
 git add .
 git commit -am"${gitCommitMessage}"
 git push > /dev/null 2>&1

@@ -31,9 +31,6 @@ export class EditComponent implements OnInit {
 
 
   saveLightMessage() {
-    // this.lightMessageService.save(this.lightMessage, id => {
-    //   this.lightMessage["_id"] = id;
-    // });
     this.lightMessageService.save(this.lightMessage)
       .subscribe(
           id => {

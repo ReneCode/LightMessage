@@ -46,7 +46,6 @@ export class ServerService {
     }
     catch (err) {
     }
-    console.log("#### this:", this)
     return server
   }
 

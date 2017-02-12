@@ -20,9 +20,8 @@ export class LightMessage {
 @Injectable()
 export class LightMessageService {
 
-  private url = environment.api_server + '/lights';
   private headers: Headers;
-  private currentUsername = "test-user";
+  private _currentUsername = "test-user";
 
   SIZE_X = 4
   SIZE_Y = 4
@@ -80,7 +79,7 @@ http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html?#instance-metho
   private saveLightMessage(server: string, message: LightMessage): Observable<string> {
     let options = { headers: this.headers}
     if (!message.username) {
-      message.username = 'admin'
+      message.username = this._currentUsername
     }
     if (message._id) {
       // update existing message

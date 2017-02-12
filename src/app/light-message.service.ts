@@ -44,10 +44,10 @@ http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html?#instance-metho
       .concatMap( url => this.loadLatestLightMessage(url))
   }
 
-  private loadLatestLightMessage(url: string) : Observable<LightMessage> {
+  private loadLatestLightMessage(server: string) : Observable<LightMessage> {
     let options = { headers: this.headers}
-    let urlLatest = url + '/lights/latest'
-    return this.http.get(urlLatest, options)
+    let url = server + '/lights/latest'
+    return this.http.get(url, options)
       .map( this.extractLatest )
       .catch( this.handleError)
   }
@@ -71,50 +71,45 @@ http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html?#instance-metho
     return msg
   }
 
-  // load(callback) {
-  //   let options = { headers: this.headers}
-  //   this.http.get(this.url, options)
-  //     .subscribe( 
-  //       (res:Response) =>  {
-  //         let result = res.json();
-  //         callback(result)
-  //       },
-  //       (err) => this.handleError(err) );
-  // }
 
-  save(message, callback) { 
+  save(message: LightMessage): Observable<string> {
+    return this._serverService.getServer()
+      .concatMap( url => this.saveLightMessage(url, message))
+  }
+
+  private saveLightMessage(server: string, message: LightMessage): Observable<string> {
     let options = { headers: this.headers}
     if (!message.username) {
       message.username = 'admin'
     }
     if (message._id) {
       // update existing message
-      let urlPut = this.url + '/' + message._id; 
-      this.http.put(urlPut, message, options) 
-        .subscribe( 
-          (res:Response) => {
-            callback(message._id)
-          }, 
-          (err) => this.handleError(err) );  
+      let url = server + '/lights/' + message._id; 
+      return this.http.put(url, message, options) 
+        .map( (res:Response) => message._id )
+        .catch(this.handleError);  
       
     } else {
       // create new message
-      this.http.post(this.url, message, options)
-        .subscribe( 
-          (res:Response) => {
-            // extract the id (last part of the retuned created-url)
-            let rx = /\w+\/(.*)/;
-            let id = rx.exec(res.text());
-            if (id.length >= 2) {
-              callback(id[1])
-            } else {
-              callback()
-            }
-          }, 
-          (err) => this.handleError(err) );
+      let url = server + '/lights'  
+      return this.http.post(url, message, options)
+        .map(this.extractSave)
+        .catch(this.handleError)
     }
-    
   }
+
+  private extractSave(res: Response) {
+    // res.text = "lights/3895cq984n5w9esuz"
+    // 3895.. is the id that we want
+    let rx = /\w+\/(.*)/;
+    let id = rx.exec(res.text());
+    if (id.length >= 2) {
+      return id[1]
+    } else {
+      return undefined
+    }
+  }
+
 
   handleError(err) {
     console.log(err) 

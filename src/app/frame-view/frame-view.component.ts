@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { LightFrame } from '../light-message'
+import { LightMessage } from '../models/light-message'
+import { LightFrame } from '../models/light-frame'
 
 @Component({
   selector: 'app-frame-view',

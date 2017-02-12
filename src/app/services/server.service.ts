@@ -12,7 +12,7 @@ export class ServerService {
   constructor(private _http: Http) { }
 
   getServer(): Observable<string> {
-      if (!environment.production) {
+      if (!environment.api_server) {
         return this.getServerFromLocal()
       }
       else {

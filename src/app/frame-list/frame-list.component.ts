@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output, Input } from '@angular/core';
-import { LightMessage, LightFrame } from '../light-message'
+import { LightMessage } from '../models/light-message'
+import { LightFrame } from '../models/light-frame'
 
 @Component({
   selector: 'app-frame-list',

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { LightMessageService } from '../light-message.service'
-import { LightMessage, LightFrame } from '../light-message'
+import { LightMessageService } from '../services/light-message.service'
+import { LightMessage } from '../models/light-message'
+import { LightFrame } from '../models/light-frame'
 
 @Component({
   selector: 'app-edit',

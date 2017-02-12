@@ -5,10 +5,10 @@ import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/catch'
 import 'rxjs/add/operator/concatMap'
 
-import { environment } from '../environments/environment'
+import { environment } from '../../environments/environment'
 
-import { LightMessage } from './light-message'
-import { ServerService } from './services/server.service'
+import { LightMessage } from '../models/light-message'
+import { ServerService } from './server.service'
 
 /*
 export class LightMessage {

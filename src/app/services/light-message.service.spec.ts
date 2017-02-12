@@ -25,9 +25,9 @@ describe('LightMessageService', () => {
 
   it('should save light sequence', inject([LightMessageService], (service: LightMessageService) => {
     let l1 = {username:"abc", message:{x:44, y:"hello"}};
-    service.save(l1, function() {
-      console.log("test");
-    })
+    // service.save(l1, function() {
+    //   console.log("test");
+    // })
   }));
 
 

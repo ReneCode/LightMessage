@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LedControlService } from '../led-control.service'
+import { LedControlService } from '../services/led-control.service'
 
 @Component({
   selector: 'app-color',

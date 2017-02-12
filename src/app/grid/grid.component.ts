@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { LedControlService } from '../led-control.service'
-import { LightMessageService } from '../light-message.service'
-import { LightFrame } from '../light-message'
+import { LedControlService } from '../services/led-control.service'
+import { LightMessageService } from '../services/light-message.service'
+import { LightFrame } from '../models/light-frame'
 
 @Component({
   selector: 'app-grid',

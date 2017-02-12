@@ -1,8 +1,6 @@
-<<<<<<< 920891ec1081404d40e46ee439b3a1c8b2d02429
 .git
-node_modules
-=======
 node_modules
 scripts
 src
->>>>>>> update dockerfile
+e2e
+

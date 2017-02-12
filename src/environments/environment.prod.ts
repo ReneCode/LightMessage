@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  api_server: 'http://lightmessageservice.azurewebsites.net'
+  api_server: '' // get the server from the Frontend-Server http://lightmessageservice.azurewebsites.net'
 
 };

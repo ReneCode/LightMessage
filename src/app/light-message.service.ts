@@ -71,16 +71,16 @@ http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html?#instance-metho
     return msg
   }
 
-  load(callback) {
-    let options = { headers: this.headers}
-    this.http.get(this.url, options)
-      .subscribe( 
-        (res:Response) =>  {
-          let result = res.json();
-          callback(result)
-        },
-        (err) => this.handleError(err) );
-  }
+  // load(callback) {
+  //   let options = { headers: this.headers}
+  //   this.http.get(this.url, options)
+  //     .subscribe( 
+  //       (res:Response) =>  {
+  //         let result = res.json();
+  //         callback(result)
+  //       },
+  //       (err) => this.handleError(err) );
+  // }
 
   save(message, callback) { 
     let options = { headers: this.headers}

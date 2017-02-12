@@ -34,22 +34,18 @@ export class ServerService {
     // query the cloud-server
     let url = './api/env.php'
     return this._http.get(url)
-      .map(this.extractData)
+      .map( res => this.extractData(res) )
       .catch(this.handleError)
   }
 
   private extractData(res: Response) : string {
     let server = undefined
     try {
-      console.log("a0", server)
       server = res.json().ApiServer
-      console.log("a1", server)
       this._cloudServer = server
-      console.log("a2", server)
     }
     catch (err) {
     }
-    console.log("#### server:", server)
     console.log("#### this:", this)
     return server
   }

@@ -52,6 +52,7 @@ export class ServerService {
     }
     catch (err) {
     }
+    console.log("#### server:", server)
     return server
   }
 

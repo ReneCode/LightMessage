@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
-import { LightMessage } from '../models/light-message'
-import { LightFrame } from '../models/light-frame'
+import { LightMessage } from '../../models/light-message'
+import { LightFrame } from '../../models/light-frame'
 
 
 @Component({

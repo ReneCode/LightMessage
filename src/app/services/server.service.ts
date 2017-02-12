@@ -12,20 +12,14 @@ export class ServerService {
   constructor(private _http: Http) { }
 
   getServer(): Observable<string> {
-      if (!environment.api_server) {
-        return this.getServerFromLocal()
+      if (environment.api_server) {
+        return Observable.create( (observer) => {
+          observer.next(environment.api_server)
+        })
       }
       else {
         return this.getServerFromCloud()
       }
-  }
-
-  getServerFromLocal(): Observable<string> {
-    // get URL from fixed environment variable
-    let observable = Observable.create( (observer) => {
-      observer.next(environment.api_server)
-    })
-    return observable
   }
 
   getServerFromCloud(): Observable<string> {
